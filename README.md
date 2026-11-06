@@ -1,6 +1,6 @@
 # Waypoint
 
-A local progress tracker for reading, revision, research, and other work. Built for EIO oral exam preparation and useful for other step-by-step work. Data stays local by default; a synced data folder remains an option for sequential device handoff.
+A local progress tracker for reading, revision, research, and other work. Initially built for my EIO oral exam preparation, and now generally useful for other step-by-step work. Data stays local by default; a synced data folder remains an option for sequential device handoff.
 
 ## Open
 
