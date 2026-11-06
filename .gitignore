@@ -1,0 +1,6 @@
+data/
+waypoint.local.json
+tasks/
+*.log
+node_modules/
+.test-output/

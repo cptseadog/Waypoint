@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Waypoint · Make progress visible</title><link rel="stylesheet" href="/style.css"><script defer src="/app.js"></script></head>
+<body>
+<div class="shell">
+<aside class="sidebar">
+<a class="brand" href="/"><span class="brand-mark">w<span>·</span></span><span>Waypoint<small>ONE STEP AT A TIME</small></span></a>
+<button id="new-task" class="button bright">＋ New task</button>
+<nav aria-label="Workspace"><button class="nav-button selected" id="nav-work">◈ <span>Workspace</span><span id="active-count" class="count">0</span></button><button class="nav-button" id="nav-history">◷ <span>History</span><span id="done-count" class="count">0</span></button></nav>
+<button id="toggle-projects" class="button secondary" aria-expanded="false" aria-controls="projects">Projects</button><div id="projects" aria-label="Projects"></div>
+<div class="sidebar-bottom"><span class="saved-dot"></span> Your local workspace<p>Small steps. A lasting record.</p><details class="workspace-tools"><summary>Workspace tools</summary><button id="help" class="sidebar-link sidebar-action">Set up with a chat</button><a href="/api/export" class="sidebar-link">Export history ↗</a><button id="import-task" class="sidebar-link sidebar-action">Import task / old tracker</button><button id="handoff" class="sidebar-link sidebar-action">Save & stop server</button></details><input id="import-file" type="file" accept=".json,application/json" hidden></div>
+</aside>
+<main>
+<header class="topbar"><div><span id="breadcrumb">Your workspace</span><span class="separator">/</span><strong id="view-label">Focus</strong></div><span id="today"></span></header>
+<div class="page">
+<div id="notice" role="status" hidden></div>
+<section class="page-heading"><div><p class="eyebrow">MAKE PROGRESS VISIBLE</p><h1 id="heading">A little closer, every step.</h1><p class="muted" id="subheading">Read, revise, research. Pick a task and find your rhythm.</p></div></section>
+<div class="summary" id="summary"></div>
+<div class="toolbar"><div class="segmented"><button id="filter-open" class="selected">Active tasks</button><button id="filter-all">All tasks</button><button id="filter-archived">Archived</button></div><label class="search"><span>⌕</span><input id="search" type="search" placeholder="Search tasks in this view" aria-label="Search tasks in this view"></label></div>
+<div class="workspace">
+<section class="task-panel" aria-label="Tasks"><div class="section-label"><h2 id="list-title">Your tasks</h2><span id="task-count"></span></div><div id="task-list"></div></section>
+<section id="detail" aria-label="Selected task"></section>
+</div>
+<footer><span>Made for the work between “I should” and “I did.”</span><span id="connection">Connecting…</span></footer>
+</div>
+</main>
+</div>
+<dialog id="project-dialog" aria-labelledby="project-title">
+<form id="project-form"><h2 id="project-title">New project</h2><p class="muted">Give related tasks a place. You can add tasks now or later.</p>
+<label>Project name<input id="project-name" required maxlength="120" placeholder="e.g. Thesis research" autofocus></label>
+<label>Project type<select id="project-kind"><option value="course">Course</option><option value="research">Research</option><option value="personal">Personal</option></select></label>
+<p id="project-error" class="error" role="alert"></p><div class="dialog-actions"><button type="button" id="cancel-project" class="button secondary">Cancel</button><button type="submit" id="save-project" class="button primary">Create project</button></div></form></dialog>
+<dialog id="task-dialog" aria-labelledby="form-title"><form id="task-form">
+<div class="dialog-heading"><div><p class="eyebrow">GIVE YOUR WORK A PLACE</p><h2 id="form-title">A new waypoint</h2></div><button type="button" id="close-form" class="icon-button" aria-label="Close">×</button></div>
+<label>Task name<input name="title" required maxlength="240" placeholder="Revise seminar slides and script"></label>
+<div class="fields"><label>Course or project<input name="projectName" required maxlength="120" placeholder="e.g. EIO oral exam preparation" list="project-names"><datalist id="project-names"></datalist></label><label>Project type<select name="projectKind"><option value="course">Course</option><option value="research">Research</option><option value="personal">Personal</option></select></label></div>
+<div class="fields"><label>Activity<input name="activity" value="Revise" required maxlength="60" list="activities"><datalist id="activities"><option>Read</option><option>Revise</option><option>Write</option><option>Review</option><option>Practice</option></datalist></label><label>Unit<input name="unit" value="slide" required maxlength="40" list="units"><datalist id="units"><option>page</option><option>slide</option><option>paper</option><option>section</option><option>item</option></datalist></label></div>
+<label>Track by<select name="mode" id="item-mode"><option value="range">Numbered range</option><option value="list">Specific items / checklist</option></select></label>
+<div id="range-fields" class="fields"><label>First<input name="start" type="number" value="1" min="1" max="99999"></label><label>Last (included)<input name="end" type="number" value="10" min="1" max="99999"></label></div>
+<label id="list-field" hidden>One step per line<textarea name="items" rows="5" placeholder="Revise slide 3 + speaking notes&#10;Revise slide 8 + speaking notes&#10;Rehearse the conclusion"></textarea></label>
+<section id="item-editor" hidden><p class="muted">Edit or reorder steps and add new ones. Steps with recorded progress cannot be removed; their time and history stay attached.</p><div id="editor-rows"></div><button type="button" id="add-step" class="button secondary">＋ Add step</button></section><div class="fields"><label>Target date (optional)<input name="dueDate" type="date"></label><label>Chat link (optional)<input name="chatUrl" placeholder="codex://threads/…"></label></div>
+<label>Materials <span class="muted">(one per line: label | path or URL)</span><textarea name="materials" rows="2" placeholder="Slides | D:\research\talk.pptx&#10;Script | D:\research\script.docx"></textarea></label>
+<label>Task notes<textarea name="notes" rows="2" placeholder="What does done look like?"></textarea></label>
+<button type="button" id="reload-edit" class="button secondary" hidden>Discard draft and load latest task</button><p id="form-error" class="error" role="alert"></p>
+<div class="dialog-actions"><button type="button" id="cancel-form" class="button secondary">Cancel</button><button type="submit" class="button primary">Save task</button></div>
+</form></dialog>
+<dialog id="delete-dialog" aria-labelledby="delete-title" aria-describedby="delete-description">
+<form id="delete-form">
+<h2 id="delete-title">Delete task?</h2>
+<p id="delete-description">Delete <strong id="delete-task-name"></strong> and all its progress, focus sessions, notes, and activity history from Waypoint? Any running timer for this task will stop. This cannot be undone in the app.</p>
+<p class="muted">Existing backup snapshots and task configuration files remain on disk.</p>
+<p id="delete-error" class="error" role="alert"></p>
+<div class="dialog-actions"><button type="button" id="cancel-delete" class="button secondary" autofocus>Cancel</button><button type="submit" id="confirm-delete" class="button danger">Delete task and history</button></div>
+</form></dialog>
+<dialog id="time-dialog" aria-labelledby="time-title" aria-describedby="time-description">
+<form id="time-form">
+<h2 id="time-title">Correct recorded time</h2>
+<p id="time-task-name" class="muted"></p>
+<p id="time-description" class="muted">Set the total time you actually spent on a step. Saving pauses this task’s timer. Completion stays unchanged, and the activity log keeps the old and new times.</p>
+<label>Page or step<select id="time-item"></select></label>
+<p id="time-original" class="muted"></p>
+<fieldset class="time-duration"><legend>Correct total time</legend><div class="duration-fields">
+<label>Hours<input id="time-hours" type="number" min="0" max="99999" step="1" required></label>
+<label>Minutes<input id="time-minutes" type="number" min="0" max="59" step="1" required></label>
+<label>Seconds<input id="time-seconds" type="number" min="0" max="59" step="1" required></label>
+</div></fieldset>
+<label>Reason (optional)<input id="time-reason" maxlength="1000" placeholder="e.g. Forgot to pause during a break"></label>
+<p id="time-error" class="error" role="alert"></p>
+<div class="dialog-actions"><button type="button" id="cancel-time" class="button secondary">Cancel</button><button type="submit" id="save-time" class="button primary">Save correction</button></div>
+</form></dialog>
+<dialog id="help-dialog"><div class="dialog-heading"><div><p class="eyebrow">A FRESH CHAT. THE SAME WORKSPACE.</p><h2>Let a chat set the starting point.</h2></div><button id="close-help" class="icon-button" aria-label="Close">×</button></div><p>In any chat, ask it to read AGENT.md in your Waypoint installation folder (use its full path), then give it your materials and describe the work you want to track.</p><blockquote>“Configure Waypoint for revising my slides and script. This belongs to [course/project]. Read the materials and make a checklist of the pages that need my attention. Keep a link to this chat.”</blockquote><p>The guide explains how to create a task configuration in your data folder. You can also import a task JSON file using the sidebar.</p><p class="muted">The chat prepares the plan. You mark your progress here. Completion dates, focus time, and notes stay together in your data folder.</p></dialog>
+</body></html>

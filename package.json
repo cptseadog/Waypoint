@@ -1,0 +1,13 @@
+{
+  "name": "waypoint",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Local task progress, focus timing, and history for course and research work.",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "start": "node server.cjs",
+    "test": "node --test tests/*.test.cjs"
+  }
+}

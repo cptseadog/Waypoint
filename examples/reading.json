@@ -1,0 +1,21 @@
+{
+  "id": "example-paper-reading",
+  "title": "Read a paper and summarize the findings",
+  "project": {
+    "name": "Example research project",
+    "kind": "research"
+  },
+  "activity": "Read",
+  "unit": "page",
+  "range": {
+    "start": 1,
+    "end": 12
+  },
+  "materials": [
+    {
+      "label": "Paper",
+      "location": "Replace with a PDF path or paper URL"
+    }
+  ],
+  "notes": "Example range. Update the task after inspecting the actual paper."
+}

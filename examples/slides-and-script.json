@@ -1,0 +1,41 @@
+{
+  "id": "example-seminar-revision",
+  "title": "Revise slides and speaking script",
+  "project": {
+    "name": "Example seminar",
+    "kind": "course"
+  },
+  "activity": "Revise",
+  "unit": "section",
+  "notes": "Example only: replace these steps after inspecting your slides and script. Finish each step when both the slide and its speaking notes are revised.",
+  "materials": [
+    {
+      "label": "Slides",
+      "location": "Replace with the slides file path"
+    },
+    {
+      "label": "Script",
+      "location": "Replace with the script file path"
+    }
+  ],
+  "items": [
+    {
+      "id": "motivation",
+      "label": "Revise the motivation slide and opening script",
+      "notes": "Check that the opening explains the research question."
+    },
+    {
+      "id": "methods",
+      "label": "Revise methods slides and matching script",
+      "notes": "Check notation and explain the main assumptions."
+    },
+    {
+      "id": "results",
+      "label": "Revise results slides and interpretation"
+    },
+    {
+      "id": "rehearsal",
+      "label": "Rehearse the full presentation"
+    }
+  ]
+}
